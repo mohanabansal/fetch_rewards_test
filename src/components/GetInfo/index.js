@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { getInfoFromAPI } from "../../redux/GetInfo";
+import './index.css'
 
 function GetInfo(props) {
   useEffect(() => {
