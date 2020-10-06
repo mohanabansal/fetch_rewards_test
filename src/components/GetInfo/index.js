@@ -15,9 +15,9 @@ function GetInfo(props) {
   }, []);
 
   const handleSelect = (e) => {
-    props.updateSortOrder(e.target.value)
-    props.getInfo()
-  }
+    props.updateSortOrder(e.target.value);
+    props.getInfo();
+  };
 
   const { info } = props;
   console.log("info", info);
@@ -25,37 +25,41 @@ function GetInfo(props) {
     <div>
       <h1>Welcome to the Test App</h1>
       {!Object.keys(info).length ? (
-        <div className = "loading">
+        <div className="loading">
           <h3>Loading...</h3>
           <img src={loadingImage} alt="loading data" />
         </div>
       ) : (
         <div>
-        <label>Sort By Name:</label>
-        <select onChange={handleSelect}>
-          <option value = "inc" defaultChecked>Increasing</option>
-          <option value = "dec">Decreasing</option>
-        </select>
-        <table>
-          {Object.keys(info)
-            .sort()
-            .map((key) => {
-              return (
-                <tbody key={key}>
-                  <tr>
-                    <th>{key}</th>
-                  </tr>
-                  {info[key].map((item) => {
-                    return (
-                      <tr key={item.id}>
-                        <td>{item.name}</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              );
-            })}
-        </table>
+          <div className = "sortby">
+            <label>Sort By Name:</label>
+            <select onChange={handleSelect}>
+              <option value="inc" defaultChecked>
+                Increasing
+              </option>
+              <option value="dec">Decreasing</option>
+            </select>
+          </div>
+          <table>
+            {Object.keys(info)
+              .sort()
+              .map((key) => {
+                return (
+                  <tbody key={key}>
+                    <tr>
+                      <th>{key}</th>
+                    </tr>
+                    {info[key].map((item) => {
+                      return (
+                        <tr key={item.id}>
+                          <td>{item.name}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                );
+              })}
+          </table>
         </div>
       )}
     </div>
@@ -68,7 +72,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getInfo: () => dispatch(getInfoFromAPI()),
-  updateSortOrder: (order) => dispatch(updateSortOrder(order))
+  updateSortOrder: (order) => dispatch(updateSortOrder(order)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GetInfo);
