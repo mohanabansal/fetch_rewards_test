@@ -1,68 +1,24 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Getting started
+Clone the project
 
-In the project directory, you can run:
+Run `npm install`
 
-### `yarn start`
+Run `npm start`
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Project Structure
+This project is created with React Hooks and is set up with redux. It is the best practice to have redux as it has a central store for the entire application and thus we get a consistent data. In addition to that, it avoids race condition to update data in store as only reducer can update the store. It might be an over kill for this application to have store and redux but it is a good practice to have that in place.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Application flow
+- When the application loads, we make a `get` request to the API to get the data
+- That request is passed to `Thunk Middleware` that will handle any side-effects and gets the data
+- The data is then passed to an action creator with the payload as data
+- The action creator then passes the action type and payload to the reducer which takes action according to the action type
+- In reducer, when we pass the data, it massages it a format where all the enteries are grouped by listId's and only valid names are stored. At the end it updates the store with the data
+- The component gets the new data as soon as the store is updated and then we display the data in UI
+- The UI provides the user with the capability to select "Increasing" or "Decreasing" order for sorting by name, by default the selecting on "Increasing"
+- When user makes the selection, the value is passed down to the reducer that updates the store and returns the info in updated order
+- There is a CSS file in the components folder that handles the styling of the component
 
-### `yarn test`
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
