@@ -15,13 +15,11 @@ export const updateSortOrder = (sortOrder) => ({
 
 //thunk
 export const getInfoFromAPI = () => {
-  console.log("in reducer");
   return async (dispatch, getState, { axios }) => {
     try {
       const { data } = await axios.get(
         "https://cors-anywhere.herokuapp.com/fetch-hiring.s3.amazonaws.com/hiring.json"
       );
-      console.log("data", data);
       dispatch(getInfo(data));
     } catch (error) {
       console.log(error);
@@ -48,7 +46,6 @@ function sortedList(list, order) {
       );
     })
   }
-  console.log(list[1])
   return list
 }
 

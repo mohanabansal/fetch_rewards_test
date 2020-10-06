@@ -7,20 +7,20 @@ function GetInfo(props) {
   const loadingImage =
     "https://media.tenor.com/images/7d9cb36e95124fb829ff8f2450c3a567/tenor.gif";
 
+  const { info } = props;
+
   useEffect(() => {
-    async function getInfoFromAPI() {
+    async function getInfoOnComponentMount() {
       await props.getInfo();
     }
-    getInfoFromAPI();
-  }, []);
+    getInfoOnComponentMount();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleSelect = (e) => {
     props.updateSortOrder(e.target.value);
     props.getInfo();
   };
 
-  const { info } = props;
-  console.log("info", info);
   return (
     <div>
       <h1>Welcome to the Test App</h1>
@@ -31,7 +31,7 @@ function GetInfo(props) {
         </div>
       ) : (
         <div>
-          <div className = "sortby">
+          <div className="sortby">
             <label>Sort By Name:</label>
             <select onChange={handleSelect}>
               <option value="inc" defaultChecked>
