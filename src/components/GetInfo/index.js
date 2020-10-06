@@ -23,7 +23,7 @@ function GetInfo(props) {
 
   return (
     <div>
-      <h1>Welcome to the Test App</h1>
+      <h1>Welcome to the Fetch Rewards App</h1>
       {!Object.keys(info).length ? (
         <div className="loading">
           <h3>Loading...</h3>
