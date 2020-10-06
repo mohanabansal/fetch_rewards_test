@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import {getInfoFromAPI} from '../../redux/GetInfo'
+import { getInfoFromAPI } from "../../redux/GetInfo";
 
 function GetInfo(props) {
   useEffect(() => {
@@ -8,18 +8,43 @@ function GetInfo(props) {
       await props.getInfo();
     }
     getInfoFromAPI();
-
   }, []);
 
+  const { info } = props;
+  console.log("info", info);
   return (
     <div>
-      <h1>Welcom to the Test App</h1>
+      <h1>Welcome to the Test App</h1>
+      <table>
+        {Object.keys(info)
+          .sort()
+          .map((key) => {
+            return (
+              <tbody key={key}>
+                <tr>
+                  <th>{key}</th>
+                </tr>
+                {info[key].map((item) => {
+                  return (
+                    <tr key={item.id}>
+                      <td>{item.name}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            );
+          })}
+      </table>
     </div>
   );
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  getInfo: () => dispatch(getInfoFromAPI())
-})
+const mapStateToProps = (state) => ({
+  info: state.getInfo.info,
+});
 
-export default connect(null, mapDispatchToProps)(GetInfo);
+const mapDispatchToProps = (dispatch) => ({
+  getInfo: () => dispatch(getInfoFromAPI()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(GetInfo);
