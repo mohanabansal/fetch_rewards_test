@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { getInfoFromAPI } from "../../redux/GetInfo";
+import { getInfoFromAPI, updateSortOrder } from "../../redux/GetInfo";
 import "./index.css";
 
 function GetInfo(props) {
@@ -14,6 +14,11 @@ function GetInfo(props) {
     getInfoFromAPI();
   }, []);
 
+  const handleSelect = (e) => {
+    props.updateSortOrder(e.target.value)
+    props.getInfo()
+  }
+
   const { info } = props;
   console.log("info", info);
   return (
@@ -25,6 +30,12 @@ function GetInfo(props) {
           <img src={loadingImage} alt="loading data" />
         </div>
       ) : (
+        <div>
+        <label>Sort By Name:</label>
+        <select onChange={handleSelect}>
+          <option value = "inc" defaultChecked>Increasing</option>
+          <option value = "dec">Decreasing</option>
+        </select>
         <table>
           {Object.keys(info)
             .sort()
@@ -45,6 +56,7 @@ function GetInfo(props) {
               );
             })}
         </table>
+        </div>
       )}
     </div>
   );
@@ -56,6 +68,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getInfo: () => dispatch(getInfoFromAPI()),
+  updateSortOrder: (order) => dispatch(updateSortOrder(order))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GetInfo);

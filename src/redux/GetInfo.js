@@ -1,11 +1,17 @@
 //action type
 const GET_INFO = "GET_INFO";
+const UPDATE_SORT_ORDER = "UPDATE_SORT_ORDER"
 
 //action creator
 const getInfo = (info) => ({
   type: GET_INFO,
   info,
 });
+
+export const updateSortOrder = (sortOrder) => ({
+  type: UPDATE_SORT_ORDER,
+  sortOrder
+})
 
 //thunk
 export const getInfoFromAPI = () => {
@@ -25,7 +31,26 @@ export const getInfoFromAPI = () => {
 
 const initialState = {
   info: [],
+  sortOder: "inc"
 };
+
+function sortedList(list, order) {
+  if(order === "inc") {
+    Object.keys(list).forEach((key) => {
+      list[key].sort(
+        (a, b) => a.name.split(" ")[1] - b.name.split(" ")[1]
+      );
+    });
+  }else {
+    Object.keys(list).forEach((key) => {
+      list[key].sort(
+        (a, b) => b.name.split(" ")[1] - a.name.split(" ")[1]
+      );
+    })
+  }
+  console.log(list[1])
+  return list
+}
 
 export default function getInfoReducer(state = initialState, action) {
   switch (action.type) {
@@ -41,16 +66,20 @@ export default function getInfoReducer(state = initialState, action) {
         }
       }
 
-      Object.keys(dict).forEach((key) => {
-        dict[key].sort(
-          (a, b) => a.name.split(" ")[1] - b.name.split(" ")[1]
-        );
-      });
+      dict = sortedList(dict, state.sortOder)
 
       return {
         ...state,
         info: dict,
       };
+    case UPDATE_SORT_ORDER:
+      let oldInfo = state.info;
+      let newInfo = sortedList(oldInfo, action.sortOrder)
+      return {
+        ...state,
+        info: newInfo,
+        sortOder: action.sortOrder
+      }
     default:
       return state;
   }
