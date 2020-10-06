@@ -7,7 +7,8 @@ function GetInfo(props) {
     async function getInfoFromAPI() {
       await props.getInfo();
     }
-    getInfoFromAPI()
+    getInfoFromAPI();
+
   }, []);
 
   return (

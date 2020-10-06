@@ -9,11 +9,13 @@ const getInfo = (info) => ({
 
 //thunk
 export const getInfoFromAPI = () => {
+  console.log("in reducer");
   return async (dispatch, getState, { axios }) => {
     try {
       const { data } = await axios.get(
         "https://cors-anywhere.herokuapp.com/fetch-hiring.s3.amazonaws.com/hiring.json"
       );
+      console.log("data", data);
       dispatch(getInfo(data));
     } catch (error) {
       console.log(error);
@@ -22,7 +24,7 @@ export const getInfoFromAPI = () => {
 };
 
 const initialState = {
-  info: []
+  info: [],
 };
 
 export default function getInfoReducer(state = initialState, action) {
@@ -39,11 +41,16 @@ export default function getInfoReducer(state = initialState, action) {
         }
       }
 
-      
+      Object.keys(dict).forEach((key) => {
+        dict[key].sort(
+          (a, b) => a.name.split(" ")[1] - b.name.split(" ")[1]
+        );
+      });
+
       return {
         ...state,
-        info: dict
-      }
+        info: dict,
+      };
     default:
       return state;
   }
