@@ -28,9 +28,21 @@ const initialState = {
 export default function getInfoReducer(state = initialState, action) {
   switch (action.type) {
     case GET_INFO:
+      let dict = {};
+
+      //creates a dictionary with key as the listId's and only enters the name with value and
+      for (let info of action.info) {
+        if (info.name && info.name.length !== 0) {
+          dict[info.listId]
+            ? (dict[info.listId] = [...dict[info.listId], info])
+            : (dict[info.listId] = [info]);
+        }
+      }
+
+      
       return {
         ...state,
-        info: action.info
+        info: dict
       }
     default:
       return state;
