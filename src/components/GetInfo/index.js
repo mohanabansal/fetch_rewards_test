@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { getInfoFromAPI } from "../../redux/GetInfo";
+import { getInfoFromAPI, updateSortOrder } from "../../redux/GetInfo";
 import "./index.css";
 
 function GetInfo(props) {
@@ -14,37 +14,53 @@ function GetInfo(props) {
     getInfoFromAPI();
   }, []);
 
+  const handleSelect = (e) => {
+    props.updateSortOrder(e.target.value);
+    props.getInfo();
+  };
+
   const { info } = props;
   console.log("info", info);
   return (
     <div>
       <h1>Welcome to the Test App</h1>
       {!Object.keys(info).length ? (
-        <div className = "loading">
+        <div className="loading">
           <h3>Loading...</h3>
           <img src={loadingImage} alt="loading data" />
         </div>
       ) : (
-        <table>
-          {Object.keys(info)
-            .sort()
-            .map((key) => {
-              return (
-                <tbody key={key}>
-                  <tr>
-                    <th>{key}</th>
-                  </tr>
-                  {info[key].map((item) => {
-                    return (
-                      <tr key={item.id}>
-                        <td>{item.name}</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              );
-            })}
-        </table>
+        <div>
+          <div className = "sortby">
+            <label>Sort By Name:</label>
+            <select onChange={handleSelect}>
+              <option value="inc" defaultChecked>
+                Increasing
+              </option>
+              <option value="dec">Decreasing</option>
+            </select>
+          </div>
+          <table>
+            {Object.keys(info)
+              .sort()
+              .map((key) => {
+                return (
+                  <tbody key={key}>
+                    <tr>
+                      <th>{key}</th>
+                    </tr>
+                    {info[key].map((item) => {
+                      return (
+                        <tr key={item.id}>
+                          <td>{item.name}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                );
+              })}
+          </table>
+        </div>
       )}
     </div>
   );
@@ -56,6 +72,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getInfo: () => dispatch(getInfoFromAPI()),
+  updateSortOrder: (order) => dispatch(updateSortOrder(order)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GetInfo);
