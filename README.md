@@ -1,11 +1,17 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Getting started
-Clone the project
+Visit the project deployed at: [https://fetchrewards.netlify.app/](https://fetchrewards.netlify.app/)
 
-Run `npm install`
+OR
 
-Run `npm start`
+To run on your local:
+
+- Clone the project
+
+- Run `npm install`
+
+- Run `npm start`
 
 ## Project Structure
 This project is created with React Hooks and is set up with redux. It is the best practice to have redux as it has a central store for the entire application and thus we get a consistent data. In addition to that, it avoids race condition to update data in store as only reducer can update the store. It might be an over kill for this application to have store and redux but it is a good practice to have that in place.
