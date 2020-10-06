@@ -1,16 +1,24 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import {getInfoFromAPI} from '../../redux/GetInfo'
 
-function GetInfo() {
-
+function GetInfo(props) {
   useEffect(() => {
+    async function getInfoFromAPI() {
+      await props.getInfo();
+    }
+    getInfoFromAPI()
+  }, []);
 
-  }, [])
-
-  return(
+  return (
     <div>
       <h1>Welcom to the Test App</h1>
     </div>
-  )
+  );
 }
 
-export default GetInfo
+const mapDispatchToProps = (dispatch) => ({
+  getInfo: () => dispatch(getInfoFromAPI())
+})
+
+export default connect(null, mapDispatchToProps)(GetInfo);
